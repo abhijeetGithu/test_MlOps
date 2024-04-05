@@ -1,4 +1,4 @@
-from app import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify
 import pickle
 import numpy as np
 from sklearn.datasets import load_iris
@@ -20,11 +20,18 @@ def index():
 # Define a route for prediction
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Get the features from the request
-    features = request.json['features']
+    # Get the features from the request JSON
+    request_data = request.get_json()
+    if 'features' not in request_data:
+        return jsonify({'error': 'Missing features in request'}), 400
+    
+    features = request_data['features']
     
     # Convert features to numpy array
-    features = np.array(features).reshape(1, -1)
+    try:
+        features = np.array(features).reshape(1, -1)
+    except ValueError:
+        return jsonify({'error': 'Invalid features provided'}), 400
     
     # Make prediction
     prediction = model.predict(features)
@@ -37,5 +44,3 @@ def predict():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
-
-
