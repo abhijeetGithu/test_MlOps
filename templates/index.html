@@ -47,7 +47,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('prediction-result').innerText = 'Predicted Class: ' + data.prediction;
+                document.getElementById('prediction-result').innerText = 'Your Predicted Class is Here: ' + data.prediction;
             })
             .catch(error => console.error('Error:', error));
         });
