@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 # Load the Iris dataset
 iris = load_iris()
+target_names = iris.target_names
 
 # Load the trained model
 with open('iris_model.pkl', 'rb') as model_file:
@@ -37,7 +38,7 @@ def predict():
     prediction = model.predict(features)
     
     # Map prediction index to class label
-    class_label = iris.target_names[prediction[0]]
+    class_label = target_names[prediction[0]]
     
     # Return the prediction
     return jsonify({'prediction': class_label})
