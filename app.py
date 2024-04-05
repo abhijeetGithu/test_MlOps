@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 # Load the Iris dataset
 iris = load_iris()
+# pylint: disable=no-member
 target_names = iris.target_names
 
 # Load the trained model
